@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
+	<link rel="shortcut icon" media="all" type="image/x-icon" href="Images/favicon.png" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -35,7 +35,10 @@
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Steps</h3>
 <p>
 	<ul>
-		<li></li>	
+		<li>Add unhandled exception handler (is called when it's still possible to send a proper response message)</li>	
+		<li>Add unhandled exception logger (is called always)</li>
+		<li>Configure handler and logger in WebApiConfig</li>
+		<li>Add failing action on pizza controller to see logger and handler in action</li>
 	</ul>
 </p>
 
