@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
 using API;
@@ -14,7 +15,7 @@ using NUnit.Framework;
 namespace Api.Tests
 {
     [TestFixture]
-    public class ApiTests : IDisposable
+    public class ApiTests
     {
         private HttpServer _httpServer;
         private HttpClient _httpClient;
@@ -38,10 +39,22 @@ namespace Api.Tests
             _httpServer = new HttpServer(config);
         }
 
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+            _httpServer.Dispose();
+        }
+        
         [SetUp]
         public void SetUp()
         {
             _httpClient = new HttpClient(_httpServer);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _httpClient.Dispose();
         }
 
         [Test]
@@ -76,14 +89,6 @@ namespace Api.Tests
                 request.Content = new JsonContent(payload);
 
                 return _httpClient.SendAsync(request).Result;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_httpServer != null)
-            {
-                _httpServer.Dispose();
             }
         }
     }
