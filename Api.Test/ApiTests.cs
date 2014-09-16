@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
 using API;
 using Api.Host;
@@ -58,9 +59,9 @@ namespace Api.Tests
         }
 
         [Test]
-        public async void CanCreatePizza()
+        public async Task CanCreatePizza()
         {
-            using (var response = SendRequest("Pizza", HttpMethod.Post, new Pizza { Name = "Basic Pizza" }, "pizza", "pizza"))
+            using (var response = await SendRequest("Pizza", HttpMethod.Post, new Pizza { Name = "Basic Pizza" }, "pizza", "pizza"))
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var pizza = JsonConvert.DeserializeObject<Pizza>(content);
@@ -70,7 +71,7 @@ namespace Api.Tests
             }
         }
         
-        private HttpResponseMessage SendRequest(string url, HttpMethod method, object payload, string username = null, string password = null)
+        private Task<HttpResponseMessage> SendRequest(string url, HttpMethod method, object payload, string username = null, string password = null)
         {
             using (var request = new HttpRequestMessage())
             {
@@ -88,7 +89,7 @@ namespace Api.Tests
                 request.Method = method;
                 request.Content = new JsonContent(payload);
 
-                return _httpClient.SendAsync(request).Result;
+                return _httpClient.SendAsync(request);
             }
         }
     }
